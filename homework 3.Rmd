@@ -1,0 +1,56 @@
+---
+title: "My answers"
+author: "Hao Zeng"
+date: "30 September 2018""
+output: 
+  pdf_document:
+    includes:
+      toc:yes
+      number_sections:yes
+      keep_tex:yes
+header-includes:
+  - /usepackage{graphicx}
+  - /usepackage{float}
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Complete Problem 2 from "Activity for Lab 3".
+
+#Load packages
+```{r}
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+```
+
+#Manage data
+```{r}
+data("gapminder")
+gap_2007 <- filter(gapminder,year == 2007)
+text <- gap_2007[gap_2007$continent == "Europe" & gap_2007$gdpPercap > 40000,]
+ggplot(data = gap_2007,
+         aes(x = gdpPercap, y = lifeExp))+
+  geom_point()+
+  geom_text(data = text, label = text$country, col = 4, size = 5,vjust = 1)+
+  labs(x = "GDP per capita", y = "life expectancy")+
+  theme_bw()
+```
+
+
+## Recreat the graph
+```{r}
+ggplot(data = gap_2007,
+         aes(x = gdpPercap, y = lifeExp))+
+  geom_point(shape = 1,stroke = 1.5)+
+  geom_rect(aes(xmin = 39000, xmax = 51000, ymin = 75,ymax = 85),fill = "pink",alpha = 0.01)+
+  annotate("text",x = 45000, y = 72, label = "Countries with \n highest GDP")+
+  labs(x = "GDP per capita", y = "life expectancy")+
+  theme_bw()
+
+
+```
+
